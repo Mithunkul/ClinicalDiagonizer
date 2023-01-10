@@ -8,8 +8,9 @@ Created on Tue Jan  3 21:22:35 2023
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QSizePolicy, QStyleFactory
 import sys
+from backend import *
 
-class Main(QtWidgets.QWidget):
+class Main(QtWidgets.QWidget, Backend):
 
     def __init__(self):
         super(Main, self).__init__()
@@ -81,20 +82,19 @@ class Main(QtWidgets.QWidget):
         NAME_PATIENT_LBL = QtWidgets.QLabel("Name : ")
         AGE_PATIENT_LBL = QtWidgets.QLabel("Age : ")
         GENDER_PATIENT_LBL = QtWidgets.QLabel("Gender : ")
-        WEIGHT_PATIENT_LBL = QtWidgets.QLabel("Addition Info : ")
+        WEIGHT_PATIENT_LBL = QtWidgets.QLabel("Weight : ")
         HISTORY_PATIENT_LBL = QtWidgets.QLabel("History/Keywords : ")
-        SYMPTOMS_PATIENT_LBL = QtWidgets.QLabel("Symptoms : ")
         
         self.NAME_PATIENT_LE = QtWidgets.QLineEdit()
         self.AGE_PATIENT_LE = QtWidgets.QLineEdit()
         self.GENDER_PATIENT_CB = QtWidgets.QComboBox()
         self.WEIGHT_PATIENT_LE = QtWidgets.QLineEdit()
         self.HISTORY_PATIENT_LE = QtWidgets.QTextEdit()
-        self.SYMPTOMS_PATIENT_LE = QtWidgets.QTextEdit()
         
         self.GENDER_PATIENT_CB.addItems(["Male", "Female", "Others"])
         
         SUBMI_PATIENT_PB = QtWidgets.QPushButton("Submit")
+        SUBMI_PATIENT_PB.clicked.connect(self.submitPatientDetails)
         
         PATIENT_GRIDBOX = QtWidgets.QGridLayout()
         PATIENT_GRIDBOX.addWidget(NAME_PATIENT_LBL,0,0)
@@ -107,9 +107,7 @@ class Main(QtWidgets.QWidget):
         PATIENT_GRIDBOX.addWidget(self.WEIGHT_PATIENT_LE,3,1)
         PATIENT_GRIDBOX.addWidget(HISTORY_PATIENT_LBL,4,0)
         PATIENT_GRIDBOX.addWidget(self.HISTORY_PATIENT_LE,4,1)
-        PATIENT_GRIDBOX.addWidget(SYMPTOMS_PATIENT_LBL,5,0)
-        PATIENT_GRIDBOX.addWidget(self.SYMPTOMS_PATIENT_LE,5,1)
-        PATIENT_GRIDBOX.addWidget(SUBMI_PATIENT_PB,6,0)
+        PATIENT_GRIDBOX.addWidget(SUBMI_PATIENT_PB,5,0)
         
         PATIENT_GROUPBOX.setLayout(PATIENT_GRIDBOX)
         
@@ -134,6 +132,7 @@ class Main(QtWidgets.QWidget):
         self.DOCTOR_DISEASE_CB.setEditable(True)
         
         SUBMI_DISEASE_PB = QtWidgets.QPushButton("Submit")
+        SUBMI_DISEASE_PB.clicked.connect(self.addRecord)
         
         DISEASE_GRIDBOX = QtWidgets.QGridLayout()
         DISEASE_GRIDBOX.addWidget(PATIENT_DISEASE_LBL,0,0)
@@ -166,6 +165,7 @@ class Main(QtWidgets.QWidget):
         self.ALTERNATIVES_DRUG_LE = QtWidgets.QLineEdit()
         
         SUBMI_DRUG_PB = QtWidgets.QPushButton("Submit")
+        SUBMI_DRUG_PB.clicked.connect(self.submitDrugDetails)
         
         DRUGS_GRIDBOX = QtWidgets.QGridLayout()
         DRUGS_GRIDBOX.addWidget(NAME_DRUG_LBL,0,0)
@@ -183,7 +183,7 @@ class Main(QtWidgets.QWidget):
         tab1.layout = QtWidgets.QVBoxLayout()
         
         tab1.layout.addWidget(PATIENT_GROUPBOX)
-        tab1.layout.addWidget(DISEASE_GROUPBOX)
+        #tab1.layout.addWidget(DISEASE_GROUPBOX)
         tab1.layout.addWidget(DRUGS_GROUPBOX)
         
         tab1.setLayout(tab1.layout)
