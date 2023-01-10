@@ -89,7 +89,7 @@ class Main(QtWidgets.QWidget, Backend):
         self.AGE_PATIENT_LE = QtWidgets.QLineEdit()
         self.GENDER_PATIENT_CB = QtWidgets.QComboBox()
         self.WEIGHT_PATIENT_LE = QtWidgets.QLineEdit()
-        self.HISTORY_PATIENT_LE = QtWidgets.QTextEdit()
+        self.HISTORY_PATIENT_LE = QtWidgets.QLineEdit()
         
         self.GENDER_PATIENT_CB.addItems(["Male", "Female", "Others"])
         
@@ -122,10 +122,10 @@ class Main(QtWidgets.QWidget, Backend):
         DOCTOR_DISEASE_LBL = QtWidgets.QLabel("Doctor : ")
         
         self.PATIENT_DISEASE_CB = QtWidgets.QComboBox()
-        self.TREATMENT_DISEASE_TE = QtWidgets.QTextEdit()
-        self.OBSERVATION_DISEASE_TE = QtWidgets.QTextEdit()
-        self.DRUGSUSED_DISEASE_TE = QtWidgets.QTextEdit()
-        self.SIDEEFFECTS_DISEASE_TE = QtWidgets.QTextEdit()
+        self.TREATMENT_DISEASE_TE = QtWidgets.QLineEdit()
+        self.OBSERVATION_DISEASE_TE = QtWidgets.QLineEdit()
+        self.DRUGSUSED_DISEASE_TE = QtWidgets.QLineEdit()
+        self.SIDEEFFECTS_DISEASE_TE = QtWidgets.QLineEdit()
         self.DOCTOR_DISEASE_CB = QtWidgets.QComboBox()
         
         self.PATIENT_DISEASE_CB.setEditable(True)
@@ -183,16 +183,17 @@ class Main(QtWidgets.QWidget, Backend):
         tab1.layout = QtWidgets.QVBoxLayout()
         
         tab1.layout.addWidget(PATIENT_GROUPBOX)
-        #tab1.layout.addWidget(DISEASE_GROUPBOX)
+        tab1.layout.addWidget(DISEASE_GROUPBOX)
         tab1.layout.addWidget(DRUGS_GROUPBOX)
         
         tab1.setLayout(tab1.layout)
         
         #### Search Tab Widgets
         HBOX_SEARCH = QtWidgets.QHBoxLayout()
-        SEARCH_LABEL = QtWidgets.QLabel(" Search by keyword : ")
+        SEARCH_LABEL = QtWidgets.QLabel(" Search by keyword(use commas to seperate) : ")
         self.SEARCH_LE = QtWidgets.QLineEdit()
         SEARCH_PB = QtWidgets.QPushButton("Search")
+        SEARCH_PB.clicked.connect(self.searchByKeywords)
         
         HBOX_SEARCH.addWidget(SEARCH_LABEL)
         HBOX_SEARCH.addWidget(self.SEARCH_LE)

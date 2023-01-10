@@ -17,8 +17,9 @@ class ClinicalDiagonizerDB:
         c.execute("""CREATE TABLE Login_Details (username text primary key not null, 
                     access varchar(10), 
                     password text, 
-                    date text, 
-                    time text)""")
+                    hospital_id integer,
+                    date text,
+                    FOREIGN KEY(hospital_id) REFERENCES Hospital(hospital_id))""")
         conn.close()
         
     def create_hospital_table(self):
@@ -30,8 +31,7 @@ class ClinicalDiagonizerDB:
                     phone integer,
                     type text,
                     extra_details text,
-                    date text, 
-                    time text)""")
+                    date text)""")
         conn.close()
     
     def create_doctor_table(self):
@@ -41,8 +41,7 @@ class ClinicalDiagonizerDB:
                     hospital_id integer,
                     hospital_name text, 
                     qualification text, 
-                    date text, 
-                    time text,
+                    date text,
                     FOREIGN KEY(hospital_id) REFERENCES Hospital(hospital_id))""")
         conn.close()
     
@@ -50,19 +49,12 @@ class ClinicalDiagonizerDB:
         conn = sqlite3.connect("CDDB.db", timeout = 120.0)
         c = conn.cursor()    
         c.execute("""CREATE TABLE Patients (patient_id integer PRIMARY KEY NOT NULL UNIQUE,
-                    doctor_id integer,
-                    hospital_id integer,
+                    name text,
                     age integer,
                     gender varchar(10),
                     weight float,
-                    height text,
-                    additional_info text,
                     keywords text,
-                    extra text,
-                    date text, 
-                    time text,
-                    FOREIGN KEY(doctor_id) REFERENCES Doctor(doctor_id),
-                    FOREIGN KEY(hospital_id) REFERENCES Hospital(hospital_id))""")
+                    date text)""")
         conn.close()
     
     
@@ -78,7 +70,6 @@ class ClinicalDiagonizerDB:
                      side_effects text,
                      drugs_used text,
                      date text,
-                     time text,
                      FOREIGN KEY(doctor_id) REFERENCES Doctor(doctor_id),
                      FOREIGN KEY(patient_id) REFERENCES Patients(patient_id))""")
         conn.close()
@@ -91,8 +82,7 @@ class ClinicalDiagonizerDB:
                      contents text,
                      manufacturer text,
                      alternatives text,
-                    date text,
-                    time text)""")
+                    date text)""")
         conn.close()
         
     def __init__(self):
