@@ -39,7 +39,7 @@ class ClinicalDiagonizerDB:
         c = conn.cursor()    
         c.execute("""CREATE TABLE Doctor (doctor_id integer PRIMARY KEY NOT NULL UNIQUE,
                     hospital_id integer,
-                    hospital_name text, 
+                    name text, 
                     qualification text, 
                     date text,
                     FOREIGN KEY(hospital_id) REFERENCES Hospital(hospital_id))""")

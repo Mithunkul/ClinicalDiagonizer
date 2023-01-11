@@ -7,8 +7,54 @@ Created on Tue Jan 10 20:07:00 2023
 
 import sqlite3
 import datetime
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Backend:
+    
+    def Login(self):
+        entered_username = self.username_le.text()
+        entered_password = self.password_le.text()
+        
+        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+        c = conn.cursor()
+        with conn:
+            c.execute("SELECT username, access, password, hospital_id FROM Login_Details")
+            data = c.fetchone()
+            username, access, password, hospital_id = data
+            if entered_username!=username or entered_password!=password:
+                QtWidgets.QMessageBox.information(self, 'Info', "Wrong credentials")
+                return
+            if access != "Y":
+                QtWidgets.QMessageBox.information(self, 'Info', "Access Denied")
+                return
+        with conn:
+            c.execute("SELECT name FROM  Hospital WHERE hospital_id=:hospital_id", {'hospital_id': hospital_id})
+            hosp = c.fetchone()
+            self.hospital = {'name':hosp[0], 'id': hospital_id}
+        conn.close()
+        QtWidgets.QMessageBox.information(self, 'Info', "Welcome \n" + self.hospital['name'])
+        self.CreateMainPage()
+        docs = self.fetchDocsfromHispitalId(hospital_id)
+        self.DOCTOR_DISEASE_CB.addItems(docs)
+        
+    def fetchDocsfromHispitalId(self, hid):
+        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+        c = conn.cursor()
+        with conn:
+            c.execute("SELECT name FROM Doctor WHERE hospital_id=:hospital_id", {"hospital_id":hid})
+            data = c.fetchall()
+            docs = self.flatten(data)
+        conn.close()
+        return docs
+    
+    def flatten(self, llist):
+        ret = [ ]
+        for sublist in llist:
+            for subelement in sublist:
+                ret.append(subelement)
+        return ret
+        
+        
     
     def submitPatientDetails(self):
         name = self.NAME_PATIENT_LE.text()

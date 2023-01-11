@@ -15,7 +15,9 @@ class Main(QtWidgets.QWidget, Backend):
     def __init__(self):
         super(Main, self).__init__()
         self.setWindowTitle("Clinical Diagonizer")
-        self.setWindowState(self.windowState()|QtCore.Qt.WindowMaximized)
+        self.setFixedWidth(450)
+        self.setFixedHeight(750)
+        #self.setWindowState(self.windowState()|QtCore.Qt.WindowMaximized)
         
 # =============================================================================
         self.MAIN_VBOX = QtWidgets.QVBoxLayout()
@@ -39,20 +41,20 @@ class Main(QtWidgets.QWidget, Backend):
         username_label = QtWidgets.QLabel("Username : ")
         password_label = QtWidgets.QLabel("Password : ")
         
-        username_le = QtWidgets.QLineEdit()
-        password_le = QtWidgets.QLineEdit()
+        self.username_le = QtWidgets.QLineEdit()
+        self.password_le = QtWidgets.QLineEdit()
         
         submit_pb = QtWidgets.QPushButton("Submit")
-        submit_pb.clicked.connect(self.CreateMainPage)
+        submit_pb.clicked.connect(self.Login)
         
         USERNAME_HBOX.addStretch(1)
         USERNAME_HBOX.addWidget(username_label)
-        USERNAME_HBOX.addWidget(username_le)
+        USERNAME_HBOX.addWidget(self.username_le)
         USERNAME_HBOX.addStretch(1)
         
         PASSWORD_HBOX.addStretch(1)
         PASSWORD_HBOX.addWidget(password_label)
-        PASSWORD_HBOX.addWidget(password_le)
+        PASSWORD_HBOX.addWidget(self.password_le)
         PASSWORD_HBOX.addStretch(1)
         
         SUBMIT_HBOX.addStretch(1)
@@ -129,7 +131,6 @@ class Main(QtWidgets.QWidget, Backend):
         self.DOCTOR_DISEASE_CB = QtWidgets.QComboBox()
         
         self.PATIENT_DISEASE_CB.setEditable(True)
-        self.DOCTOR_DISEASE_CB.setEditable(True)
         
         SUBMI_DISEASE_PB = QtWidgets.QPushButton("Submit")
         SUBMI_DISEASE_PB.clicked.connect(self.addRecord)
@@ -220,6 +221,7 @@ class Main(QtWidgets.QWidget, Backend):
     def CreateMainPage(self):
         self.DICT_FRAMES["Credentials"].hide()
         self.GRID_BOX.addWidget(self.DICT_FRAMES["Main"],0,0)
+        print(self.hospital)
     
     
 if __name__ == "__main__":
