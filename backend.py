@@ -18,9 +18,14 @@ class Backend:
         conn = sqlite3.connect("CDDB.db", timeout = 120.0)
         c = conn.cursor()
         with conn:
-            c.execute("SELECT username, access, password, hospital_id FROM Login_Details")
+            c.execute("SELECT username, access, password, hospital_id FROM Login_Details WHERE username=:username", {"username":entered_username})
             data = c.fetchone()
-            username, access, password, hospital_id = data
+            try:
+                username, access, password, hospital_id = data
+            except:
+                QtWidgets.QMessageBox.information(self, 'Info', "Wrong credentials")
+                return
+                
             if entered_username!=username or entered_password!=password:
                 QtWidgets.QMessageBox.information(self, 'Info', "Wrong credentials")
                 return
@@ -132,3 +137,12 @@ class Backend:
         keywords = self.SEARCH_LE.text()
         keywords = keywords.split(",")
         print(keywords)
+        
+# =============================================================================
+#         conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+#         c = conn.cursor()
+#         with conn:
+#             c.execute("SELECT * FROM Record")
+#         conn.close()
+# =============================================================================
+        

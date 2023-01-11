@@ -17,7 +17,7 @@ class ClinicalDiagonizerDB:
         c.execute("""CREATE TABLE Login_Details (username text primary key not null, 
                     access varchar(10), 
                     password text, 
-                    hospital_id integer,
+                    hospital_id integer UNIQUE,
                     date text,
                     FOREIGN KEY(hospital_id) REFERENCES Hospital(hospital_id))""")
         conn.close()

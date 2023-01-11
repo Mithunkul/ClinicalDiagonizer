@@ -33,9 +33,6 @@ class db2xl:
                  df.to_excel(writer, sheet_name = str(table))
                  
              writer.save()
-                 
-                 
-    
     
     def flatten(self, llist):
         ret = [ ]
