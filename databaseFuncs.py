@@ -66,7 +66,6 @@ class ClinicalDiagonizerDB:
                      patient_id integer,
                      doctor_id integer,
                      treatment text,
-                     observation text,
                      side_effects text,
                      drugs_used text,
                      date text,

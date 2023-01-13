@@ -41,16 +41,34 @@ class Backend:
         self.CreateMainPage()
         docs = self.fetchDocsfromHispitalId(hospital_id)
         self.DOCTOR_DISEASE_CB.addItems(docs)
+        patients = self.fetchAllPatients()
+        self.PATIENT_DISEASE_CB.addItems(patients)
         
     def fetchDocsfromHispitalId(self, hid):
         conn = sqlite3.connect("CDDB.db", timeout = 120.0)
         c = conn.cursor()
         with conn:
-            c.execute("SELECT name FROM Doctor WHERE hospital_id=:hospital_id", {"hospital_id":hid})
+            c.execute("SELECT doctor_id, name FROM Doctor WHERE hospital_id=:hospital_id", {"hospital_id":hid})
             data = c.fetchall()
-            docs = self.flatten(data)
         conn.close()
+        docs=[]
+        for item in data:
+            idname = str(item[0]) +"-"+ str(item[1])
+            docs.append(idname)
         return docs
+    
+    def fetchAllPatients(self):
+        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+        c = conn.cursor()
+        with conn:
+            c.execute("SELECT patient_id, name FROM Patients")
+            data = c.fetchall()
+        conn.close()
+        pats=[]
+        for item in data:
+            idname = str(item[0]) +"-"+ str(item[1])
+            pats.append(idname)
+        return pats
     
     def flatten(self, llist):
         ret = [ ]
@@ -95,13 +113,34 @@ class Backend:
     
     def addRecord(self):
         patient = self.PATIENT_DISEASE_CB.currentText()
+        patient = patient.split("-")
+        patient_id = int(patient[0])
+        name = patient[1]
+        
+        doctor = self.DOCTOR_DISEASE_CB.currentText()
+        doctor = doctor.split("-")
+        doctor_id = doctor[0]
+        
+        symptoms = self.SYMPTOMS_DISEASE_TE.text()
         treatment = self.TREATMENT_DISEASE_TE.text()
-        observation = self.OBSERVATION_DISEASE_TE.text()
         drugs_used = self.DRUGSUSED_DISEASE_TE.text()
         side_effects = self.SIDEEFFECTS_DISEASE_TE.text()
-        doc = self.DOCTOR_DISEASE_CB.currentText()
         
-        print(patient, treatment, observation, drugs_used, side_effects, doc)
+        
+        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+        c = conn.cursor()
+        with conn:
+            c.execute("INSERT INTO Record VALUES(:name, :symptoms, :patient_id, :doctor_id, :treatment,	:side_effects,	:drugs_used	, :date)", 
+                      {"name": name,
+                        "symptoms":symptoms,
+                        "patient_id":patient_id,
+                        "doctor_id":doctor_id,
+                        "treatment":treatment,
+                        "side_effects":side_effects,
+                        "drugs_used": drugs_used,
+                        "date": str(datetime.datetime.now())                       
+                        })
+        conn.close()
         
     def submitDrugDetails(self):
         name = self.NAME_DRUG_LE.text()

@@ -56,5 +56,5 @@ class db2xl:
         
 #  UNCOMMENT THE FOLLOWING CODE TO RUN.
         
-db2xl(dbfile = r'E:\ClinicalDiagonizer\CDDB.db')
+db2xl(dbfile = r'CDDB.db')
 os.startfile('db2XL.xlsx')
