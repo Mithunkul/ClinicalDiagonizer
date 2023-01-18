@@ -86,97 +86,104 @@ class Backend:
         weight = self.WEIGHT_PATIENT_LE.text()
         keywords = self.HISTORY_PATIENT_LE.text()
         
-        
-        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
-        c = conn.cursor()
-        with conn:
-            c.execute("SELECT MAX(patient_id) FROM Patients")
-            patient_id = c.fetchone()
-            patient_id = patient_id[0]
-            if patient_id == None:
-                patient_id = 1
-            else:
-                patient_id = patient_id+ 1
-        
-        with conn:
-            c.execute("INSERT INTO Patients VALUES(:patient_id,:name, :age, :gender, :weight, :keywords, :date)",
-                      {"patient_id":patient_id,
-                       "name": name,
-                       "age":age,
-                       "gender":gender,
-                       "weight":weight,
-                       "keywords":keywords,
-                       "date":str(datetime.datetime.now())
-                       })
-        conn.close()
+        try: 
+            conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+            c = conn.cursor()
+            with conn:
+                c.execute("SELECT MAX(patient_id) FROM Patients")
+                patient_id = c.fetchone()
+                patient_id = patient_id[0]
+                if patient_id == None:
+                    patient_id = 1
+                else:
+                    patient_id = patient_id+ 1
+            
+            with conn:
+                c.execute("INSERT INTO Patients VALUES(:patient_id,:name, :age, :gender, :weight, :keywords, :date)",
+                          {"patient_id":patient_id,
+                           "name": name,
+                           "age":age,
+                           "gender":gender,
+                           "weight":weight,
+                           "keywords":keywords,
+                           "date":str(datetime.datetime.now())
+                           })
+            conn.close()
+            QtWidgets.QMessageBox.information(self, 'Info', "done")
+        except Exception as e:
+            QtWidgets.QMessageBox.information(self, 'Error', str(e))
     
     
     def addRecord(self):
-        patient = self.PATIENT_DISEASE_CB.currentText()
-        patient = patient.split("-")
-        patient_id = int(patient[0])
-        name = patient[1]
-        
-        doctor = self.DOCTOR_DISEASE_CB.currentText()
-        doctor = doctor.split("-")
-        doctor_id = doctor[0]
-        
-        symptoms = self.SYMPTOMS_DISEASE_TE.text()
-        symptoms = symptoms.lower()
-        treatment = self.TREATMENT_DISEASE_TE.text()
-        drugs_used = self.DRUGSUSED_DISEASE_TE.text()
-        side_effects = self.SIDEEFFECTS_DISEASE_TE.text()
-        
-        
-        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
-        c = conn.cursor()
-        with conn:
-            c.execute("INSERT INTO Record VALUES(:name, :symptoms, :patient_id, :doctor_id, :treatment,	:side_effects,	:drugs_used	, :date)", 
-                      {"name": name,
-                        "symptoms":symptoms,
-                        "patient_id":patient_id,
-                        "doctor_id":doctor_id,
-                        "treatment":treatment,
-                        "side_effects":side_effects,
-                        "drugs_used": drugs_used,
-                        "date": str(datetime.datetime.now())                       
-                        })
-        conn.close()
+        try:
+            patient = self.PATIENT_DISEASE_CB.currentText()
+            patient = patient.split("-")
+            patient_id = int(patient[0])
+            name = patient[1]
+            
+            doctor = self.DOCTOR_DISEASE_CB.currentText()
+            doctor = doctor.split("-")
+            doctor_id = doctor[0]
+            
+            symptoms = self.SYMPTOMS_DISEASE_TE.text()
+            symptoms = symptoms.lower()
+            treatment = self.TREATMENT_DISEASE_TE.text()
+            drugs_used = self.DRUGSUSED_DISEASE_TE.text()
+            side_effects = self.SIDEEFFECTS_DISEASE_TE.text()
+            
+            
+            conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+            c = conn.cursor()
+            with conn:
+                c.execute("INSERT INTO Record VALUES(:name, :symptoms, :patient_id, :doctor_id, :treatment,	:side_effects,	:drugs_used	, :date)", 
+                          {"name": name,
+                            "symptoms":symptoms,
+                            "patient_id":patient_id,
+                            "doctor_id":doctor_id,
+                            "treatment":treatment,
+                            "side_effects":side_effects,
+                            "drugs_used": drugs_used,
+                            "date": str(datetime.datetime.now())                       
+                            })
+            conn.close()
+            QtWidgets.QMessageBox.information(self, 'Info', "done")
+        except Exception as e:
+            QtWidgets.QMessageBox.information(self, 'Error', str(e))
         
     def submitDrugDetails(self):
-        name = self.NAME_DRUG_LE.text()
-        composition = self.COMPOSITION_DRUG_LE.text()
-        company = self.COMPANY_DRUG_LE.text()
-        alternatives = self.ALTERNATIVES_DRUG_LE.text()
-        
-        print(name, composition, company, alternatives)
-        
-        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
-        c = conn.cursor()
-        with conn:
-            c.execute("SELECT MAX(drugs_id) FROM Drugs")
-            drugs_id = c.fetchone()
-            drugs_id = drugs_id[0]
-            if drugs_id == None:
-                drugs_id = 1
-            else:
-                drugs_id = drugs_id+ 1
-        with conn:
-            c.execute("INSERT INTO Drugs VALUES(:drugs_id, :name, :contents, :manufacturer, :alternatives, :date)",
-                      {"drugs_id":drugs_id,
-                       "name":name,
-                       "contents":composition,
-                       "manufacturer":company,
-                       "alternatives":alternatives,
-                       "date":str(datetime.datetime.now())
-                       })
-        conn.close()
-        print("done")
+        try:
+            name = self.NAME_DRUG_LE.text()
+            composition = self.COMPOSITION_DRUG_LE.text()
+            company = self.COMPANY_DRUG_LE.text()
+            alternatives = self.ALTERNATIVES_DRUG_LE.text()
+                        
+            conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+            c = conn.cursor()
+            with conn:
+                c.execute("SELECT MAX(drugs_id) FROM Drugs")
+                drugs_id = c.fetchone()
+                drugs_id = drugs_id[0]
+                if drugs_id == None:
+                    drugs_id = 1
+                else:
+                    drugs_id = drugs_id+ 1
+            with conn:
+                c.execute("INSERT INTO Drugs VALUES(:drugs_id, :name, :contents, :manufacturer, :alternatives, :date)",
+                          {"drugs_id":drugs_id,
+                           "name":name,
+                           "contents":composition,
+                           "manufacturer":company,
+                           "alternatives":alternatives,
+                           "date":str(datetime.datetime.now())
+                           })
+            conn.close()
+            QtWidgets.QMessageBox.information(self, 'Info', "done")
+        except Exception as e:
+            QtWidgets.QMessageBox.information(self, 'Error', str(e))
         
     def searchByKeywords(self):
         keywords = self.SEARCH_LE.text()
         keywords = keywords.split(",")
-        print(keywords)
         
         query = "SELECT Patients.name,Doctor.name, Hospital.name, Record.symptoms, Record.treatment, Record.side_effects, Record.drugs_used from Record, Patients, Doctor, Hospital WHERE Patients.patient_id=Record.patient_id AND Record.doctor_id=Doctor.doctor_id AND Hospital.hospital_id=Doctor.hospital_id AND  "
 
@@ -185,7 +192,6 @@ class Backend:
                 query = query + f"Record.symptoms LIKE '%{val}%'"
             else:
                 query = query + f"Record.symptoms LIKE '%{val}%' AND "
-        print(query)
         
         conn = sqlite3.connect("CDDB.db", timeout = 120.0)
         c = conn.cursor()
@@ -193,7 +199,14 @@ class Backend:
             c.execute(query)
             data = c.fetchall()
         conn.close()
-        print(data)
         
         self.SEARCH_TABLE.setRowCount(len(data))
-                
+        self.SEARCH_TABLE.setHorizontalHeaderLabels(["Patient", "Doctor", "Hospital", "Symptoms", "Treatment", "Side Effects", "Drugs Used"])
+        for x, item in enumerate(data):
+            self.SEARCH_TABLE.setItem(x,0, QtWidgets.QTableWidgetItem(item[0]))
+            self.SEARCH_TABLE.setItem(x,1, QtWidgets.QTableWidgetItem(item[1]))
+            self.SEARCH_TABLE.setItem(x,2, QtWidgets.QTableWidgetItem(item[2]))
+            self.SEARCH_TABLE.setItem(x,3, QtWidgets.QTableWidgetItem(item[3]))
+            self.SEARCH_TABLE.setItem(x,4, QtWidgets.QTableWidgetItem(item[4]))
+            self.SEARCH_TABLE.setItem(x,5, QtWidgets.QTableWidgetItem(item[5]))
+            self.SEARCH_TABLE.setItem(x,6, QtWidgets.QTableWidgetItem(item[6]))

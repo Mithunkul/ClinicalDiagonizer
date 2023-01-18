@@ -15,7 +15,7 @@ class Main(QtWidgets.QWidget, Backend):
     def __init__(self):
         super(Main, self).__init__()
         self.setWindowTitle("Clinical Diagonizer")
-        self.setFixedWidth(550)
+        self.setFixedWidth(750)
         self.setFixedHeight(750)
         #self.setWindowState(self.windowState()|QtCore.Qt.WindowMaximized)
         
