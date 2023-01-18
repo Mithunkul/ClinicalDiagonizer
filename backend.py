@@ -122,6 +122,7 @@ class Backend:
         doctor_id = doctor[0]
         
         symptoms = self.SYMPTOMS_DISEASE_TE.text()
+        symptoms = symptoms.lower()
         treatment = self.TREATMENT_DISEASE_TE.text()
         drugs_used = self.DRUGSUSED_DISEASE_TE.text()
         side_effects = self.SIDEEFFECTS_DISEASE_TE.text()
@@ -177,11 +178,20 @@ class Backend:
         keywords = keywords.split(",")
         print(keywords)
         
-# =============================================================================
-#         conn = sqlite3.connect("CDDB.db", timeout = 120.0)
-#         c = conn.cursor()
-#         with conn:
-#             c.execute("SELECT * FROM Record")
-#         conn.close()
-# =============================================================================
+        query = "SELECT Patients.name,Doctor.name, Hospital.name, Record.symptoms, Record.treatment, Record.side_effects, Record.drugs_used from Record, Patients, Doctor, Hospital WHERE Patients.patient_id=Record.patient_id AND Record.doctor_id=Doctor.doctor_id AND Hospital.hospital_id=Doctor.hospital_id AND  "
+
+        for i, val in enumerate(keywords):
+            if i == len(keywords)-1:
+                query = query + f"Record.symptoms LIKE '%{val}%'"
+            else:
+                query = query + f"Record.symptoms LIKE '%{val}%' AND "
+        print(query)
         
+        conn = sqlite3.connect("CDDB.db", timeout = 120.0)
+        c = conn.cursor()
+        with conn:
+            c.execute(query)
+            data = c.fetchall()
+        conn.close()
+        print(data)
+                
