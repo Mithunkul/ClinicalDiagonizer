@@ -194,4 +194,6 @@ class Backend:
             data = c.fetchall()
         conn.close()
         print(data)
+        
+        self.SEARCH_TABLE.setRowCount(len(data))
                 
