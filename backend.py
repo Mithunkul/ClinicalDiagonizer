@@ -2,7 +2,7 @@
 """
 Created on Tue Jan 10 20:07:00 2023
 
-@author: Supreeth
+@author: amogha
 """
 
 import sqlite3
@@ -69,16 +69,7 @@ class Backend:
             idname = str(item[0]) +"-"+ str(item[1])
             pats.append(idname)
         return pats
-    
-    def flatten(self, llist):
-        ret = [ ]
-        for sublist in llist:
-            for subelement in sublist:
-                ret.append(subelement)
-        return ret
         
-        
-    
     def submitPatientDetails(self):
         name = self.NAME_PATIENT_LE.text()
         age= self.AGE_PATIENT_LE.text()
@@ -185,7 +176,7 @@ class Backend:
         keywords = self.SEARCH_LE.text()
         keywords = keywords.split(",")
         
-        query = "SELECT Patients.name,Doctor.name, Hospital.name, Record.symptoms, Record.treatment, Record.side_effects, Record.drugs_used from Record, Patients, Doctor, Hospital WHERE Patients.patient_id=Record.patient_id AND Record.doctor_id=Doctor.doctor_id AND Hospital.hospital_id=Doctor.hospital_id AND  "
+        query = "SELECT Patients.name, Patients.age, Patients.gender, Patients.weight, Patients.keywords, Doctor.name, Hospital.name, Record.symptoms, Record.treatment, Record.side_effects, Record.drugs_used from Record, Patients, Doctor, Hospital WHERE Patients.patient_id=Record.patient_id AND Record.doctor_id=Doctor.doctor_id AND Hospital.hospital_id=Doctor.hospital_id AND  "
 
         for i, val in enumerate(keywords):
             if i == len(keywords)-1:
@@ -200,13 +191,17 @@ class Backend:
             data = c.fetchall()
         conn.close()
         
+        
         self.SEARCH_TABLE.setRowCount(len(data))
-        self.SEARCH_TABLE.setHorizontalHeaderLabels(["Patient", "Doctor", "Hospital", "Symptoms", "Treatment", "Side Effects", "Drugs Used"])
         for x, item in enumerate(data):
             self.SEARCH_TABLE.setItem(x,0, QtWidgets.QTableWidgetItem(item[0]))
-            self.SEARCH_TABLE.setItem(x,1, QtWidgets.QTableWidgetItem(item[1]))
+            self.SEARCH_TABLE.setItem(x,1, QtWidgets.QTableWidgetItem(str(item[1])))
             self.SEARCH_TABLE.setItem(x,2, QtWidgets.QTableWidgetItem(item[2]))
-            self.SEARCH_TABLE.setItem(x,3, QtWidgets.QTableWidgetItem(item[3]))
+            self.SEARCH_TABLE.setItem(x,3, QtWidgets.QTableWidgetItem(str(item[3])))
             self.SEARCH_TABLE.setItem(x,4, QtWidgets.QTableWidgetItem(item[4]))
             self.SEARCH_TABLE.setItem(x,5, QtWidgets.QTableWidgetItem(item[5]))
             self.SEARCH_TABLE.setItem(x,6, QtWidgets.QTableWidgetItem(item[6]))
+            self.SEARCH_TABLE.setItem(x,7, QtWidgets.QTableWidgetItem(item[7]))
+            self.SEARCH_TABLE.setItem(x,8, QtWidgets.QTableWidgetItem(item[8]))
+            self.SEARCH_TABLE.setItem(x,9, QtWidgets.QTableWidgetItem(item[9]))
+            self.SEARCH_TABLE.setItem(x,10, QtWidgets.QTableWidgetItem(item[10]))

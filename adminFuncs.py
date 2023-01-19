@@ -2,7 +2,7 @@
 """
 Created on Tue Jan 10 22:30:22 2023
 
-@author: Supreeth
+@author: amogha
 """
 
 import sqlite3

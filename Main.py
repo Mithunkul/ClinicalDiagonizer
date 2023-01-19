@@ -2,7 +2,7 @@
 """
 Created on Tue Jan  3 21:22:35 2023
 
-@author: Supreeth
+@author: amogha
 """
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -15,9 +15,9 @@ class Main(QtWidgets.QWidget, Backend):
     def __init__(self):
         super(Main, self).__init__()
         self.setWindowTitle("Clinical Diagonizer")
-        self.setFixedWidth(750)
-        self.setFixedHeight(750)
-        #self.setWindowState(self.windowState()|QtCore.Qt.WindowMaximized)
+        #self.setFixedWidth(750)
+        #self.setFixedHeight(750)
+        self.setWindowState(self.windowState()|QtCore.Qt.WindowMaximized)
         
 # =============================================================================
         self.MAIN_VBOX = QtWidgets.QVBoxLayout()
@@ -130,7 +130,7 @@ class Main(QtWidgets.QWidget, Backend):
         self.SIDEEFFECTS_DISEASE_TE = QtWidgets.QLineEdit()
         self.DOCTOR_DISEASE_CB = QtWidgets.QComboBox()
         
-        self.PATIENT_DISEASE_CB.setEditable(True)
+        self.PATIENT_DISEASE_CB.setEditable(False)
         
         SUBMI_DISEASE_PB = QtWidgets.QPushButton("Submit")
         SUBMI_DISEASE_PB.clicked.connect(self.addRecord)
@@ -201,7 +201,8 @@ class Main(QtWidgets.QWidget, Backend):
         HBOX_SEARCH.addWidget(SEARCH_PB)
         
         self.SEARCH_TABLE = QtWidgets.QTableWidget()
-        self.SEARCH_TABLE.setColumnCount(7)
+        self.SEARCH_TABLE.setColumnCount(11)
+        self.SEARCH_TABLE.setHorizontalHeaderLabels(["Patient", "Age", "Gender", "Weight", "Keywords", "Doctor", "Hospital", "Symptoms", "Treatment", "Side Effects", "Drugs Used"])
         
         tab2.layout = QtWidgets.QVBoxLayout()
         tab2.layout.addLayout(HBOX_SEARCH)
