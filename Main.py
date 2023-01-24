@@ -28,6 +28,8 @@ class Main(QtWidgets.QWidget, Backend):
         
         self.DICT_FRAMES = {}
         self.DICT_FRAMES["Credentials"] = QtWidgets.QFrame()
+        self.DICT_FRAMES["Credentials"].setStyleSheet("background: qlineargradient(x1:0, y1:0, x2:1, y2:1,stop:0 white, stop: 0.4 rgba(10, 20, 30, 40), stop:1 rgb(0, 200, 230, 200))")
+        
         self.DICT_FRAMES["Main"] = QtWidgets.QFrame()
         
         #### Credentials Widgets
@@ -39,12 +41,17 @@ class Main(QtWidgets.QWidget, Backend):
          
         
         username_label = QtWidgets.QLabel("Username : ")
+        username_label.setStyleSheet("background-color: rgba(255, 255, 255, 10);")
         password_label = QtWidgets.QLabel("Password : ")
+        password_label.setStyleSheet("background-color: rgba(255, 255, 255, 10);")
         
         self.username_le = QtWidgets.QLineEdit()
+        self.username_le.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.password_le = QtWidgets.QLineEdit()
+        self.password_le.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         
-        submit_pb = QtWidgets.QPushButton("Submit")
+        submit_pb = QtWidgets.QPushButton("SUBMIT!")
+        submit_pb.setStyleSheet("background-color: rgba(80, 80, 80, 100); color:white")
         submit_pb.clicked.connect(self.Login)
         
         USERNAME_HBOX.addStretch(1)
