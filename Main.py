@@ -35,9 +35,14 @@ class Main(QtWidgets.QWidget, Backend):
         #### Credentials Widgets
         
         CREDENTIALS_VBOX = QtWidgets.QVBoxLayout(self.DICT_FRAMES["Credentials"])
+        TITLE_HBOX = QtWidgets.QHBoxLayout()
         USERNAME_HBOX = QtWidgets.QHBoxLayout()
         PASSWORD_HBOX = QtWidgets.QHBoxLayout()
         SUBMIT_HBOX = QtWidgets.QHBoxLayout()
+        
+        title = QtWidgets.QLabel("CLINICAL DIAGONIZER")
+        title.setFont(QtGui.QFont('Monotype Corsiva', 50))
+        title.setStyleSheet("background-color: rgba(255, 255, 255, 10);")
          
         
         username_label = QtWidgets.QLabel("Username : ")
@@ -54,6 +59,11 @@ class Main(QtWidgets.QWidget, Backend):
         submit_pb.setStyleSheet("background-color: rgba(80, 80, 80, 100); color:white")
         submit_pb.clicked.connect(self.Login)
         
+        
+        TITLE_HBOX.addStretch(1)
+        TITLE_HBOX.addWidget(title)
+        TITLE_HBOX.addStretch(1)
+        
         USERNAME_HBOX.addStretch(1)
         USERNAME_HBOX.addWidget(username_label)
         USERNAME_HBOX.addWidget(self.username_le)
@@ -68,7 +78,11 @@ class Main(QtWidgets.QWidget, Backend):
         SUBMIT_HBOX.addWidget(submit_pb)
         SUBMIT_HBOX.addStretch(1)
         
+        
         CREDENTIALS_VBOX.addStretch(1)
+        CREDENTIALS_VBOX.addLayout(TITLE_HBOX)
+        CREDENTIALS_VBOX.addSpacing(40)
+        #CREDENTIALS_VBOX.addStretch(1)
         CREDENTIALS_VBOX.addLayout(USERNAME_HBOX)
         CREDENTIALS_VBOX.addLayout(PASSWORD_HBOX)
         CREDENTIALS_VBOX.addLayout(SUBMIT_HBOX)
@@ -76,12 +90,13 @@ class Main(QtWidgets.QWidget, Backend):
         
         #### Main Frame Widgets
         MAINFRAME_VBOX = QtWidgets.QVBoxLayout(self.DICT_FRAMES["Main"])
-        
+        # self.DICT_FRAMES["Main"].setStyleSheet("background: qlineargradient(x1:0, y1:0, x2:1, y2:1,stop:0 white, stop: 0.4 rgba(10, 20, 30, 40), stop:1 rgb(0, 200, 230, 200))")
         tabs_mainframe = QtWidgets.QTabWidget()
         tab1 = QtWidgets.QWidget()
         tab2 = QtWidgets.QWidget()
         
         tabs_mainframe.addTab(tab1, " Create ")
+        
         tabs_mainframe.addTab(tab2, " Search ")
         
         #### Create Tab Widgets
@@ -95,14 +110,20 @@ class Main(QtWidgets.QWidget, Backend):
         HISTORY_PATIENT_LBL = QtWidgets.QLabel("History/Keywords : ")
         
         self.NAME_PATIENT_LE = QtWidgets.QLineEdit()
+        self.NAME_PATIENT_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.AGE_PATIENT_LE = QtWidgets.QLineEdit()
+        self.AGE_PATIENT_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.GENDER_PATIENT_CB = QtWidgets.QComboBox()
+        self.GENDER_PATIENT_CB.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.WEIGHT_PATIENT_LE = QtWidgets.QLineEdit()
+        self.WEIGHT_PATIENT_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.HISTORY_PATIENT_LE = QtWidgets.QLineEdit()
+        self.HISTORY_PATIENT_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         
         self.GENDER_PATIENT_CB.addItems(["Male", "Female", "Others"])
         
         SUBMI_PATIENT_PB = QtWidgets.QPushButton("Submit")
+        SUBMI_PATIENT_PB.setStyleSheet("background-color: rgba(80, 80, 80, 100); color:white")
         SUBMI_PATIENT_PB.clicked.connect(self.submitPatientDetails)
         
         PATIENT_GRIDBOX = QtWidgets.QGridLayout()
@@ -131,15 +152,22 @@ class Main(QtWidgets.QWidget, Backend):
         DOCTOR_DISEASE_LBL = QtWidgets.QLabel("Doctor : ")
         
         self.PATIENT_DISEASE_CB = QtWidgets.QComboBox()
+        self.PATIENT_DISEASE_CB.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.SYMPTOMS_DISEASE_TE = QtWidgets.QLineEdit()
+        self.SYMPTOMS_DISEASE_TE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.TREATMENT_DISEASE_TE = QtWidgets.QLineEdit()
+        self.TREATMENT_DISEASE_TE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.DRUGSUSED_DISEASE_TE = QtWidgets.QLineEdit()
+        self.DRUGSUSED_DISEASE_TE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.SIDEEFFECTS_DISEASE_TE = QtWidgets.QLineEdit()
+        self.SIDEEFFECTS_DISEASE_TE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.DOCTOR_DISEASE_CB = QtWidgets.QComboBox()
+        self.DOCTOR_DISEASE_CB.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         
         self.PATIENT_DISEASE_CB.setEditable(False)
         
         SUBMI_DISEASE_PB = QtWidgets.QPushButton("Submit")
+        SUBMI_DISEASE_PB.setStyleSheet("background-color: rgba(80, 80, 80, 100); color:white")
         SUBMI_DISEASE_PB.clicked.connect(self.addRecord)
         
         DISEASE_GRIDBOX = QtWidgets.QGridLayout()
@@ -168,11 +196,16 @@ class Main(QtWidgets.QWidget, Backend):
         ALTERNATIVES_DRUG_LBL = QtWidgets.QLabel("Alternatives : ")
         
         self.NAME_DRUG_LE = QtWidgets.QLineEdit()
+        self.NAME_DRUG_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.COMPOSITION_DRUG_LE = QtWidgets.QLineEdit()
+        self.COMPOSITION_DRUG_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.COMPANY_DRUG_LE = QtWidgets.QLineEdit()
+        self.COMPANY_DRUG_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         self.ALTERNATIVES_DRUG_LE = QtWidgets.QLineEdit()
+        self.ALTERNATIVES_DRUG_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         
         SUBMI_DRUG_PB = QtWidgets.QPushButton("Submit")
+        SUBMI_DRUG_PB.setStyleSheet("background-color: rgba(80, 80, 80, 100); color:white")
         SUBMI_DRUG_PB.clicked.connect(self.submitDrugDetails)
         
         DRUGS_GRIDBOX = QtWidgets.QGridLayout()
@@ -200,7 +233,9 @@ class Main(QtWidgets.QWidget, Backend):
         HBOX_SEARCH = QtWidgets.QHBoxLayout()
         SEARCH_LABEL = QtWidgets.QLabel(" Search by keyword(use commas to seperate) : ")
         self.SEARCH_LE = QtWidgets.QLineEdit()
+        self.SEARCH_LE.setStyleSheet("background-color: rgba(255, 255, 255, 200);")
         SEARCH_PB = QtWidgets.QPushButton("Search")
+        SEARCH_PB.setStyleSheet("background-color: rgba(80, 80, 80, 100); color:white")
         SEARCH_PB.clicked.connect(self.searchByKeywords)
         
         HBOX_SEARCH.addWidget(SEARCH_LABEL)
@@ -210,7 +245,7 @@ class Main(QtWidgets.QWidget, Backend):
         self.SEARCH_TABLE = QtWidgets.QTableWidget()
         self.SEARCH_TABLE.setColumnCount(11)
         self.SEARCH_TABLE.setHorizontalHeaderLabels(["Patient", "Age", "Gender", "Weight", "Keywords", "Doctor", "Hospital", "Symptoms", "Treatment", "Side Effects", "Drugs Used"])
-        
+        # self.SEARCH_TABLE.setStyleSheet("background-color: rgba(150, 255, 255, 200);color:orange")
         tab2.layout = QtWidgets.QVBoxLayout()
         tab2.layout.addLayout(HBOX_SEARCH)
         tab2.layout.addWidget(self.SEARCH_TABLE)
